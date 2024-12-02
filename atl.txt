@@ -1,0 +1,72 @@
+Login html 
+
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+
+    <body>
+        <form action="login.php" method="post">
+            <label for="email">email</label>
+            <input type="email" name="email"><br>
+            <label for="password">password</label>
+            <input type="password" name="password"><br>
+            <button>login</button>
+        </form>
+    </body>
+
+</html>
+
+login php
+
+<?php
+$conn = mysqli_connect('localhost','root','','users'); 
+extract($_POST);
+$password = md5($password);
+$q = "select * from users where email='$email' and password = '$password'";
+$res = mysqli_query($conn,$q);
+if(mysqli_num_rows($res)==1){
+    echo "login success";
+}else{
+    echo 'username or password is wrong';
+}
+?>
+
+register html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="register.php" method="post">
+        <label for="username">Username</label>
+        <input type="text" name="username"><br>
+        <label for="email">email</label>
+        <input type="email" name="email"><br>
+        <label for="password">password</label>
+        <input type="password" name="password"><br>
+        <button>Register</button>
+    </form>
+</body>
+</html>
+
+register php
+
+<?php
+$conn = mysqli_connect('localhost','root','','users');
+extract($_POST);
+$password = md5($password);
+$q = "insert into users (username,email,password) values ('$username','$email','$password')";
+$res = mysqli_query($conn,$q);
+if($res){
+    echo "registration success";
+}
+?>
